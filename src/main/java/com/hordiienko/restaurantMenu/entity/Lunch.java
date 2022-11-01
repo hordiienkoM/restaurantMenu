@@ -15,15 +15,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Lunch {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id")
     private Cuisine cuisine;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "main_course_id")
     private MainCourse mainCourse;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dessert_id")
     private Dessert dessert;
 }

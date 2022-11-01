@@ -16,11 +16,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class MainCourse {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id")
     private Cuisine cuisine;
     @OneToMany(

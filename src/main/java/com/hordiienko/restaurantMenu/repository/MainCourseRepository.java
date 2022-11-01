@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Set;
 
 public interface MainCourseRepository extends JpaRepository<MainCourse, Long> {
-    Set<MainCourse> findAllByCuisine(Cuisine cuisine);
+    Set<MainCourse> findAllByCuisineId(Long cuisineId);
 }

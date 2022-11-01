@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LunchPostDto {
-    private Cuisine cuisine;
+    private String name;
+    private Long cuisineId;
     private Long mainCourseId;
-    private Long desertId;
+    private Long dessertId;
 }

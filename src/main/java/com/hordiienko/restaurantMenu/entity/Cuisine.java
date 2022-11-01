@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Cuisine {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany(

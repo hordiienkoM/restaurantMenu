@@ -15,12 +15,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class DrinkAdditiveOrder {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "drink_additive_id")
     private DrinkAdditive drinkAdditive;
     private int amount;

@@ -1,15 +1,16 @@
 package com.hordiienko.restaurantMenu.dto;
 
-import com.hordiienko.restaurantMenu.entity.Cuisine;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class MainCoursePostDto {
+@AllArgsConstructor
+public class LunchPutDto {
+    private Long id;
     private String name;
-    private Double price;
     private Long cuisineId;
+    private Long mainCourseId;
+    private Long dessertId;
 }
