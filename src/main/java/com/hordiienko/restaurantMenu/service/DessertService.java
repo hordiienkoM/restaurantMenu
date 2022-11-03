@@ -1,7 +1,8 @@
 package com.hordiienko.restaurantMenu.service;
 
-import com.hordiienko.restaurantMenu.dto.DessertPostDto;
-import com.hordiienko.restaurantMenu.dto.DessertPutDto;
+import com.hordiienko.restaurantMenu.dto.DrinkAdditiveGetDto;
+import com.hordiienko.restaurantMenu.dto.info_parent.DessertInfo;
+import com.hordiienko.restaurantMenu.entity.Cuisine;
 import com.hordiienko.restaurantMenu.entity.Dessert;
 import com.hordiienko.restaurantMenu.repository.CuisineRepository;
 import com.hordiienko.restaurantMenu.repository.DessertRepository;
@@ -17,14 +18,9 @@ public class DessertService {
     @Autowired
     private CuisineRepository cuisineRepository;
 
-    public Dessert saveNew(DessertPostDto dessertInfo) {
+    public Dessert saveNew(DrinkAdditiveGetDto.DessertPostDto dessertInfo) {
         Dessert dessert = new Dessert();
-        dessert.setName(dessertInfo.getName());
-        dessert.setPrice(dessertInfo.getPrice());
-        dessert.setCuisine(
-                cuisineRepository.findById(
-                        dessertInfo.getCuisineId()
-                ).orElseThrow());
+        setDessertInfo(dessert, dessertInfo);
         return dessertRepository.save(dessert);
     }
 
@@ -32,15 +28,19 @@ public class DessertService {
         dessertRepository.deleteById(id);
     }
 
-    public Dessert update(DessertPutDto dessertInfo) {
+    public Dessert update(DrinkAdditiveGetDto.DessertPutDto dessertInfo) {
         Dessert dessert = dessertRepository.findById(dessertInfo.getId()).orElseThrow();
+        setDessertInfo(dessert, dessertInfo);
+        return dessertRepository.save(dessert);
+    }
+
+    protected void setDessertInfo (Dessert dessert, DessertInfo dessertInfo) {
+        Cuisine cuisine = cuisineRepository.findById(
+                dessertInfo.getCuisineId()
+        ).orElseThrow();
         dessert.setName(dessertInfo.getName());
         dessert.setPrice(dessertInfo.getPrice());
-        dessert.setCuisine(
-                cuisineRepository.findById(
-                        dessertInfo.getCuisineId()
-                ).orElseThrow());
-        return dessertRepository.save(dessert);
+        dessert.setCuisine(cuisine);
     }
 
     public Dessert getById(Long id) {

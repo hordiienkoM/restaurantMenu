@@ -1,8 +1,5 @@
 package com.hordiienko.restaurantMenu.dto;
 
-import com.hordiienko.restaurantMenu.dto.CuisineGetDto;
-import com.hordiienko.restaurantMenu.dto.DessertGetDto;
-import com.hordiienko.restaurantMenu.dto.MainCourseGetDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +12,5 @@ public class LunchGetDto {
     private String name;
     private CuisineGetDto cuisine;
     private MainCourseGetDto mainCourse;
-    private DessertGetDto dessert;
+    private DrinkAdditiveGetDto.DessertGetDto dessert;
 }

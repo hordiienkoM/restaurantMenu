@@ -1,9 +1,8 @@
 package com.hordiienko.restaurantMenu.controller;
 
-import com.hordiienko.restaurantMenu.dto.order_dto.ComplexOrderGetDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPutDto;
-import com.hordiienko.restaurantMenu.dto.order_dto.abstract_dto.AbstractOrderGetDto;
+import com.hordiienko.restaurantMenu.dto.info_parent.AbstractOrderGetDto;
 import com.hordiienko.restaurantMenu.entity.Order;
 import com.hordiienko.restaurantMenu.mapper.OrderMapper;
 import com.hordiienko.restaurantMenu.service.OrderService;
@@ -32,15 +31,14 @@ public class OrderController {
     }
 
     @PutMapping
-    public ComplexOrderGetDto updateDrink(@RequestBody OrderPutDto newInfo) {
+    public AbstractOrderGetDto updateDrink(@RequestBody OrderPutDto newInfo) {
         Order order = orderService.update(newInfo);
-        return orderMapper.toComplexGetDto(order);
+        return orderMapper.toRegulateOrders(order);
     }
 
     @GetMapping
-    public ComplexOrderGetDto getById(@RequestParam Long id) {
+    public AbstractOrderGetDto getById(@RequestParam Long id) {
         Order order = orderService.getById(id);
-        return orderMapper.toComplexGetDto(order);
+        return orderMapper.toRegulateOrders(order);
     }
-
 }

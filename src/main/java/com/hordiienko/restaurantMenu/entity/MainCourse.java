@@ -10,13 +10,14 @@ import java.util.Set;
 @Table(name = "main_course")
 @Getter
 @Setter
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class MainCourse {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
@@ -28,5 +29,6 @@ public class MainCourse {
             orphanRemoval = true,
             mappedBy = "mainCourse"
     )
+    @EqualsAndHashCode.Exclude
     private Set<Lunch> lunchs;
 }

@@ -2,9 +2,12 @@ package com.hordiienko.restaurantMenu.service;
 
 import com.hordiienko.restaurantMenu.dto.CuisinePutDto;
 import com.hordiienko.restaurantMenu.entity.Cuisine;
+import com.hordiienko.restaurantMenu.entity.Dessert;
 import com.hordiienko.restaurantMenu.repository.CuisineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class CuisineService {

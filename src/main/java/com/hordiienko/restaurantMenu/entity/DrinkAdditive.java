@@ -10,13 +10,15 @@ import java.util.Set;
 @Table(name = "drink_additive")
 @Getter
 @Setter
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@ToString
 public class DrinkAdditive {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
@@ -25,5 +27,6 @@ public class DrinkAdditive {
             orphanRemoval = true,
             mappedBy = "order"
     )
+    @EqualsAndHashCode.Exclude
     private Set<DrinkAdditiveOrder> drinkAdditiveOrders;
 }

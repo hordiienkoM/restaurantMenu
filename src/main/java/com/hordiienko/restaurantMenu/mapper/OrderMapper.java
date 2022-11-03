@@ -1,7 +1,7 @@
 package com.hordiienko.restaurantMenu.mapper;
 
 import com.hordiienko.restaurantMenu.dto.order_dto.*;
-import com.hordiienko.restaurantMenu.dto.order_dto.abstract_dto.AbstractOrderGetDto;
+import com.hordiienko.restaurantMenu.dto.info_parent.AbstractOrderGetDto;
 import com.hordiienko.restaurantMenu.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,7 +14,7 @@ public interface OrderMapper {
         boolean hasLunch = (order.getLunch() != null);
         boolean hasDrink = (order.getDrink() != null);
         boolean hasAdditive = (order.getDrinkAdditiveOrders() != null);
-        if(hasLunch && hasDrink && hasAdditive) {
+        if (hasLunch && hasDrink && hasAdditive) {
             return toComplexGetDto(order);
         } else if (hasLunch && hasDrink) {
             return toLunchDrinkGetDto(order);
@@ -26,6 +26,7 @@ public interface OrderMapper {
             return toJustDrinkGetDto(order);
         }
     }
+
     @Mapping(expression = "java(order.getLunch().getName())", target = "lunchName")
     @Mapping(expression = "java(order.getDrink().getName())", target = "drinkName")
     ComplexOrderGetDto toComplexGetDto(Order order);
@@ -42,6 +43,8 @@ public interface OrderMapper {
 
     @Mapping(expression = "java(order.getLunch().getName())", target = "lunchName")
     OrderJustLunchGetDto toJustLunchGetDto(Order order);
+
+
 
     Set<ComplexOrderGetDto> toGetDtos(Set<Order> orders);
 }

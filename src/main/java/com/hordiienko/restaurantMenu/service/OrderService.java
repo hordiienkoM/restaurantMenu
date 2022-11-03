@@ -3,7 +3,7 @@ package com.hordiienko.restaurantMenu.service;
 import com.hordiienko.restaurantMenu.dto.DrinkAdditiveOrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPutDto;
-import com.hordiienko.restaurantMenu.dto.order_dto.abstract_dto.OrderInfo;
+import com.hordiienko.restaurantMenu.dto.info_parent.OrderInfo;
 import com.hordiienko.restaurantMenu.entity.Drink;
 import com.hordiienko.restaurantMenu.entity.DrinkAdditiveOrder;
 import com.hordiienko.restaurantMenu.entity.Lunch;
@@ -25,27 +25,33 @@ public class OrderService {
     private DrinkAdditiveRepository additiveRepository;
     @Autowired
     private OrderRepository orderRepository;
+
     public Order saveNew(OrderPostDto orderInfo) {
-        Order order = new Order();
-        if(orderInfo.getLunchId() != null) {
-            saveLunch(order, orderInfo);
-        }
-        if(orderInfo.getDrinkId() != null) {
-            saveDrink(order, orderInfo);
-        }
-        if(orderInfo.getDrinkAdditiveOrders() != null) {
-            saveDrinkAdditives(order, orderInfo);
-        }
+        Order order = setInfo(orderInfo);
         return orderRepository.save(order);
     }
 
-    public Order update(OrderInfo newInfo) {
-        OrderPutDto orderPutDto = (OrderPutDto)newInfo;
-        Order order = orderRepository.findById(orderPutDto.getId()).orElseThrow();
-        saveLunch(order, orderPutDto);
-        saveDrink(order, orderPutDto);
-        saveDrinkAdditives(order, orderPutDto);
+    public Order update(OrderPutDto orderPutDto) {
+        Order order = setInfo(orderPutDto);
+        order.setId(orderPutDto.getId());
         return orderRepository.save(order);
+    }
+
+    protected Order setInfo(OrderInfo orderInfo) {
+        if (orderInfo.getLunchId() == null && orderInfo.getDrinkId() == null) {
+            throw new RuntimeException("The order must be not empty");
+        }
+        Order order = new Order();
+        if (orderInfo.getLunchId() != null) {
+            saveLunch(order, orderInfo);
+        }
+        if (orderInfo.getDrinkId() != null) {
+            saveDrink(order, orderInfo);
+        }
+        if (orderInfo.getDrinkAdditiveOrders() != null) {
+            saveDrinkAdditives(order, orderInfo);
+        }
+        return order;
     }
 
     private void saveLunch(Order order, OrderInfo orderInfo) {
@@ -60,7 +66,7 @@ public class OrderService {
         order.setDrink(drink);
     }
 
-    private void saveDrinkAdditives(Order order, OrderInfo orderInfo) {
+    protected void saveDrinkAdditives(Order order, OrderInfo orderInfo) {
         Set<DrinkAdditiveOrderPostDto> additivesInfo = orderInfo.getDrinkAdditiveOrders();
         Set<DrinkAdditiveOrder> additives = additivesInfo.stream()
                 .map(e -> {

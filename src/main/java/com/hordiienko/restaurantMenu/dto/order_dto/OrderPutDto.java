@@ -1,7 +1,7 @@
 package com.hordiienko.restaurantMenu.dto.order_dto;
 
 import com.hordiienko.restaurantMenu.dto.DrinkAdditiveOrderPostDto;
-import com.hordiienko.restaurantMenu.dto.order_dto.abstract_dto.OrderInfo;
+import com.hordiienko.restaurantMenu.dto.info_parent.OrderInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

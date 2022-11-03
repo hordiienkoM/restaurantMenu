@@ -11,13 +11,16 @@ import java.util.Set;
 @Table(name = "orders")
 @Getter
 @Setter
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class Order {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lunch_id")
@@ -31,22 +34,4 @@ public class Order {
             mappedBy = "order"
     )
     private Set<DrinkAdditiveOrder> drinkAdditiveOrders;
-
-    public Order(Lunch lunch) {
-        this.lunch = lunch;
-    }
-
-    public Order(Drink drink) {
-        this.drink = drink;
-    }
-    public Order(Drink drink, Set<DrinkAdditiveOrder> drinkAdditiveOrders) {
-        this.drink = drink;
-        this.drinkAdditiveOrders = drinkAdditiveOrders;
-    }
-
-    public Order(Lunch lunch, Drink drink, Set<DrinkAdditiveOrder> drinkAdditiveOrders) {
-        this.lunch = lunch;
-        this.drink = drink;
-        this.drinkAdditiveOrders = drinkAdditiveOrders;
-    }
 }
