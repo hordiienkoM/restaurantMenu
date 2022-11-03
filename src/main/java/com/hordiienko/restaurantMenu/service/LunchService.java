@@ -2,6 +2,7 @@ package com.hordiienko.restaurantMenu.service;
 
 import com.hordiienko.restaurantMenu.dto.LunchPostDto;
 import com.hordiienko.restaurantMenu.dto.LunchPutDto;
+import com.hordiienko.restaurantMenu.dto.info_parent.LunchInfo;
 import com.hordiienko.restaurantMenu.entity.Lunch;
 import com.hordiienko.restaurantMenu.repository.LunchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,9 @@ public class LunchService {
     @Autowired
     private MainCourseService mainCourseService;
 
-    public Lunch saveNew(LunchPostDto newLunch) {
+    public Lunch saveNew(LunchPostDto lunchInfo) {
         Lunch lunch = new Lunch();
-        lunch.setName(newLunch.getName());
-        lunch.setCuisine(
-                cuisineService.getById(newLunch.getCuisineId())
-        );
-        lunch.setDessert(
-                dessertService.getById(newLunch.getDessertId())
-        );
-        lunch.setMainCourse(
-                mainCourseService.getById(
-                        newLunch.getMainCourseId())
-        );
+        setInfo(lunch, lunchInfo);
         return lunchRepository.save(lunch);
     }
 
@@ -42,7 +33,13 @@ public class LunchService {
 
     public Lunch update(LunchPutDto lunchInfo) {
         Lunch lunch = lunchRepository.findById(
-                lunchInfo.getId()).orElseThrow();
+                lunchInfo.getId()
+        ).orElseThrow();
+        setInfo(lunch, lunchInfo);
+        return lunchRepository.save(lunch);
+    }
+
+    protected void setInfo(Lunch lunch, LunchInfo lunchInfo) {
         lunch.setMainCourse(
                 mainCourseService.getById(lunchInfo.getMainCourseId()));
         lunch.setDessert(
@@ -51,7 +48,6 @@ public class LunchService {
         lunch.setCuisine(
                 cuisineService.getById(lunchInfo.getCuisineId()));
         lunch.setName(lunchInfo.getName());
-        return lunchRepository.save(lunch);
     }
 
     public Lunch getById(Long id) {

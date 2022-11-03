@@ -1,6 +1,6 @@
 package com.hordiienko.restaurantMenu.dto;
 
-import com.hordiienko.restaurantMenu.dto.info_parent.DrinkAdditiveInfo;
+import com.hordiienko.restaurantMenu.dto.info_parent.DessertInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DrinkAdditivePostDto implements DrinkAdditiveInfo {
+public class DessertPostDto implements DessertInfo {
     private String name;
     private Double price;
+    private Long cuisineId;
 }

@@ -1,6 +1,7 @@
 package com.hordiienko.restaurantMenu.service;
 
-import com.hordiienko.restaurantMenu.dto.DrinkAdditiveGetDto;
+import com.hordiienko.restaurantMenu.dto.DessertPostDto;
+import com.hordiienko.restaurantMenu.dto.DessertPutDto;
 import com.hordiienko.restaurantMenu.dto.info_parent.DessertInfo;
 import com.hordiienko.restaurantMenu.entity.Cuisine;
 import com.hordiienko.restaurantMenu.entity.Dessert;
@@ -18,7 +19,7 @@ public class DessertService {
     @Autowired
     private CuisineRepository cuisineRepository;
 
-    public Dessert saveNew(DrinkAdditiveGetDto.DessertPostDto dessertInfo) {
+    public Dessert saveNew(DessertPostDto dessertInfo) {
         Dessert dessert = new Dessert();
         setDessertInfo(dessert, dessertInfo);
         return dessertRepository.save(dessert);
@@ -28,7 +29,7 @@ public class DessertService {
         dessertRepository.deleteById(id);
     }
 
-    public Dessert update(DrinkAdditiveGetDto.DessertPutDto dessertInfo) {
+    public Dessert update(DessertPutDto dessertInfo) {
         Dessert dessert = dessertRepository.findById(dessertInfo.getId()).orElseThrow();
         setDessertInfo(dessert, dessertInfo);
         return dessertRepository.save(dessert);

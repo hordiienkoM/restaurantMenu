@@ -2,6 +2,8 @@ package com.hordiienko.restaurantMenu.service;
 
 import com.hordiienko.restaurantMenu.dto.DrinkPostDto;
 import com.hordiienko.restaurantMenu.dto.DrinkPutDto;
+import com.hordiienko.restaurantMenu.dto.info_parent.DrinkInfo;
+import com.hordiienko.restaurantMenu.entity.Cuisine;
 import com.hordiienko.restaurantMenu.entity.Drink;
 import com.hordiienko.restaurantMenu.repository.CuisineRepository;
 import com.hordiienko.restaurantMenu.repository.DrinkRepository;
@@ -19,12 +21,7 @@ public class DrinkService {
 
     public Drink saveNew(DrinkPostDto drinkInfo) {
         Drink drink = new Drink();
-        drink.setName(drinkInfo.getName());
-        drink.setPrice(drinkInfo.getPrice());
-        drink.setCuisine(
-                cuisineRepository.findById(
-                        drinkInfo.getCuisineId()
-                ).orElseThrow());
+        saveInfo(drink, drinkInfo);
         return drinkRepository.save(drink);
     }
 
@@ -34,13 +31,17 @@ public class DrinkService {
 
     public Drink update(DrinkPutDto drinkInfo) {
         Drink drink = drinkRepository.findById(drinkInfo.getId()).orElseThrow();
+        saveInfo(drink, drinkInfo);
+        return drinkRepository.save(drink);
+    }
+
+    protected void saveInfo(Drink drink, DrinkInfo drinkInfo) {
+        Cuisine cuisine = cuisineRepository.findById(
+                drinkInfo.getCuisineId()
+        ).orElseThrow();
         drink.setName(drinkInfo.getName());
         drink.setPrice(drinkInfo.getPrice());
-        drink.setCuisine(
-                cuisineRepository.findById(
-                        drinkInfo.getCuisineId()
-                ).orElseThrow());
-        return drinkRepository.save(drink);
+        drink.setCuisine(cuisine);
     }
 
     public Drink getById(Long id) {

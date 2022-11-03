@@ -4,7 +4,6 @@ import com.hordiienko.restaurantMenu.dto.DrinkAdditiveOrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPutDto;
 import com.hordiienko.restaurantMenu.entity.*;
-import com.hordiienko.restaurantMenu.mapper.OrderMapper;
 import com.hordiienko.restaurantMenu.repository.DrinkAdditiveRepository;
 import com.hordiienko.restaurantMenu.repository.DrinkRepository;
 import com.hordiienko.restaurantMenu.repository.LunchRepository;
@@ -14,11 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -32,8 +29,6 @@ public class OrderServiceTest {
     private LunchRepository mockLunchRepository;
     @Mock
     private DrinkRepository mockDrinkRepository;
-    @Mock
-    private OrderRepository mockOrderRepository;
     @Mock
     private DrinkAdditiveRepository mockAdditiveRepository;
 

@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class LunchGetDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class DessertGetDto {
     private Long id;
     private String name;
+    private Double price;
     private CuisineGetDto cuisine;
-    private MainCourseGetDto mainCourse;
-    private DessertGetDto dessert;
 }

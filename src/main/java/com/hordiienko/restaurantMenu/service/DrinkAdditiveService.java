@@ -1,6 +1,7 @@
 package com.hordiienko.restaurantMenu.service;
 
 import com.hordiienko.restaurantMenu.dto.*;
+import com.hordiienko.restaurantMenu.dto.info_parent.DrinkAdditiveInfo;
 import com.hordiienko.restaurantMenu.entity.DrinkAdditive;
 import com.hordiienko.restaurantMenu.repository.DrinkAdditiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,7 @@ public class DrinkAdditiveService {
 
     public DrinkAdditive saveNew(DrinkAdditivePostDto drinkAdditiveInfo) {
         DrinkAdditive drinkAdditive = new DrinkAdditive();
-        drinkAdditive.setName(drinkAdditiveInfo.getName());
-        drinkAdditive.setPrice(drinkAdditiveInfo.getPrice());
+        saveInfo(drinkAdditive, drinkAdditiveInfo);
         return drinkAdditiveRepository.save(drinkAdditive);
     }
 
@@ -24,9 +24,13 @@ public class DrinkAdditiveService {
 
     public DrinkAdditive update(DrinkAdditivePutDto drinkAdditiveInfo) {
         DrinkAdditive drinkAdditive = getById(drinkAdditiveInfo.getId());
+        saveInfo(drinkAdditive, drinkAdditiveInfo);
+        return drinkAdditiveRepository.save(drinkAdditive);
+    }
+
+    public void saveInfo(DrinkAdditive drinkAdditive, DrinkAdditiveInfo drinkAdditiveInfo) {
         drinkAdditive.setName(drinkAdditiveInfo.getName());
         drinkAdditive.setPrice(drinkAdditiveInfo.getPrice());
-        return drinkAdditiveRepository.save(drinkAdditive);
     }
 
     public DrinkAdditive getById(Long id) {
