@@ -17,7 +17,7 @@ public class DrinkAdditiveController {
 
     @PostMapping
     public DrinkAdditiveGetDto saveNew(@RequestBody DrinkAdditivePostDto newDrinkAdditive) {
-        DrinkAdditive drinkAdditive = drinkAdditiveService.saveNew(newDrinkAdditive);
+        DrinkAdditive drinkAdditive = drinkAdditiveService.save(newDrinkAdditive);
         return drinkAdditiveMapper.toGetDto(drinkAdditive);
     }
 

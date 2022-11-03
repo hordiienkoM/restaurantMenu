@@ -19,7 +19,7 @@ public class DessertService {
     @Autowired
     private CuisineRepository cuisineRepository;
 
-    public Dessert saveNew(DessertPostDto dessertInfo) {
+    public Dessert save(DessertPostDto dessertInfo) {
         Dessert dessert = new Dessert();
         setDessertInfo(dessert, dessertInfo);
         return dessertRepository.save(dessert);

@@ -4,14 +4,12 @@ import com.hordiienko.restaurantMenu.dto.DrinkAdditiveOrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPutDto;
 import com.hordiienko.restaurantMenu.dto.info_parent.OrderInfo;
-import com.hordiienko.restaurantMenu.entity.Drink;
-import com.hordiienko.restaurantMenu.entity.DrinkAdditiveOrder;
-import com.hordiienko.restaurantMenu.entity.Lunch;
-import com.hordiienko.restaurantMenu.entity.Order;
+import com.hordiienko.restaurantMenu.entity.*;
 import com.hordiienko.restaurantMenu.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,11 +20,11 @@ public class OrderService {
     @Autowired
     private DrinkRepository drinkRepository;
     @Autowired
-    private DrinkAdditiveRepository additiveRepository;
+    private DrinkAdditiveService drinkAdditiveService;
     @Autowired
     private OrderRepository orderRepository;
 
-    public Order saveNew(OrderPostDto orderInfo) {
+    public Order save(OrderPostDto orderInfo) {
         Order order = setInfo(orderInfo);
         return orderRepository.save(order);
     }
@@ -67,12 +65,13 @@ public class OrderService {
     }
 
     protected void saveDrinkAdditives(Order order, OrderInfo orderInfo) {
+        Map<Long, DrinkAdditive> drinkAdditiveMap = drinkAdditiveService.getAllAdditives();
         Set<DrinkAdditiveOrderPostDto> additivesInfo = orderInfo.getDrinkAdditiveOrders();
         Set<DrinkAdditiveOrder> additives = additivesInfo.stream()
                 .map(e -> {
                     DrinkAdditiveOrder additiveOrder = new DrinkAdditiveOrder();
                     additiveOrder.setDrinkAdditive(
-                            additiveRepository.findById(e.getDrinkAdditiveId()).orElseThrow()
+                            drinkAdditiveMap.get(e.getDrinkAdditiveId())
                     );
                     additiveOrder.setAmount(e.getAmount());
                     additiveOrder.setOrder(order);

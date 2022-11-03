@@ -19,7 +19,7 @@ public class DrinkService {
     @Autowired
     private CuisineRepository cuisineRepository;
 
-    public Drink saveNew(DrinkPostDto drinkInfo) {
+    public Drink save(DrinkPostDto drinkInfo) {
         Drink drink = new Drink();
         saveInfo(drink, drinkInfo);
         return drinkRepository.save(drink);

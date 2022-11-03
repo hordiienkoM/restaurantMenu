@@ -21,7 +21,7 @@ public class DrinkController {
 
     @PostMapping
     public DrinkGetDto saveNew(@RequestBody DrinkPostDto newDrink) {
-        Drink drink = drinkService.saveNew(newDrink);
+        Drink drink = drinkService.save(newDrink);
         return drinkMapper.toGetDto(drink);
     }
 

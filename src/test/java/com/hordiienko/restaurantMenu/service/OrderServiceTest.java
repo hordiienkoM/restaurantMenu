@@ -4,10 +4,8 @@ import com.hordiienko.restaurantMenu.dto.DrinkAdditiveOrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPostDto;
 import com.hordiienko.restaurantMenu.dto.order_dto.OrderPutDto;
 import com.hordiienko.restaurantMenu.entity.*;
-import com.hordiienko.restaurantMenu.repository.DrinkAdditiveRepository;
 import com.hordiienko.restaurantMenu.repository.DrinkRepository;
 import com.hordiienko.restaurantMenu.repository.LunchRepository;
-import com.hordiienko.restaurantMenu.repository.OrderRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,7 +27,7 @@ public class OrderServiceTest {
     @Mock
     private DrinkRepository mockDrinkRepository;
     @Mock
-    private DrinkAdditiveRepository mockAdditiveRepository;
+    private DrinkAdditiveService mockDrinkAdditiveService;
 
     private Order trueComplexOrder;
     private Order trueLunchDrinkOrder;
@@ -44,7 +41,7 @@ public class OrderServiceTest {
     private OrderPutDto trueJustLunchOrderPut;
     private DrinkAdditive drinkAdditive;
     private Set<DrinkAdditiveOrder> trueDrinkAdditiveOrders;
-
+    private Map<Long, DrinkAdditive> drinkAdditiveMap;
     @Before
     public void addTrueOrders() {
         trueComplexOrder = new Order();
@@ -121,17 +118,24 @@ public class OrderServiceTest {
         ));
     }
 
+    @Before
+    public void addAdditiveMap() {
+        drinkAdditiveMap = new HashMap<>();
+        drinkAdditiveMap.put(drinkAdditive.getId(), drinkAdditive);
+    }
+
     @Test(expected = RuntimeException.class)
     public void setInfoTestException() {
         OrderPostDto wrongOrderPostDto = new OrderPostDto();
         wrongOrderPostDto.setDrinkAdditiveOrders(Collections.emptySet());
-        mockOrderService.saveNew(wrongOrderPostDto);
+        mockOrderService.save(wrongOrderPostDto);
     }
 
     @Test
     public void setInfoTest() {
         when(mockLunchRepository.findById(1L)).thenReturn(Optional.of(new Lunch()));
         when(mockDrinkRepository.findById(1L)).thenReturn(Optional.of(new Drink()));
+        when(mockDrinkAdditiveService.getAllAdditives()).thenReturn(drinkAdditiveMap);
 
         Order orderComplex = mockOrderService.setInfo(trueComplexOrderPut);
         Order orderLunchDrink = mockOrderService.setInfo(trueLunchDrinkOrderPut);
@@ -148,8 +152,7 @@ public class OrderServiceTest {
 
     @Test
     public void saveDrinkAdditivesTest() {
-        when(mockAdditiveRepository.findById(anyLong()))
-                .thenReturn(Optional.of(drinkAdditive));
+        when(mockDrinkAdditiveService.getAllAdditives()).thenReturn(drinkAdditiveMap);
         Order order = new Order();
         OrderPostDto orderInfo = new OrderPostDto();
         orderInfo.setDrinkAdditiveOrders(

@@ -20,7 +20,7 @@ public class OrderController {
 
     @PostMapping
     public AbstractOrderGetDto saveNew(@RequestBody OrderPostDto newOrder) {
-        Order order = orderService.saveNew(newOrder);
+        Order order = orderService.save(newOrder);
         return orderMapper.toRegulateOrders(order);
     }
 

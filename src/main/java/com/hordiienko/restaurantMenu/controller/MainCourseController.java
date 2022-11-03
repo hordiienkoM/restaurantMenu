@@ -19,7 +19,7 @@ public class MainCourseController {
 
     @PostMapping
     public MainCourseGetDto saveNew(@RequestBody MainCoursePostDto newMainCourse) {
-        MainCourse mainCourse = mainCourseService.saveNew(newMainCourse);
+        MainCourse mainCourse = mainCourseService.save(newMainCourse);
         return mainCourseMapper.toGetDto(mainCourse);
     }
 

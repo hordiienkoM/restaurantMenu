@@ -20,7 +20,7 @@ public class LunchController {
 
     @PostMapping
     public LunchGetDto saveNew(@RequestBody LunchPostDto newLunch) {
-        Lunch lunch = lunchService.saveNew(newLunch);
+        Lunch lunch = lunchService.save(newLunch);
         return lunchMapper.toGetDto(lunch);
     }
 

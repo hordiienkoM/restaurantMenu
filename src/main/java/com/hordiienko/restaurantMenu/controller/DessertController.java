@@ -21,7 +21,7 @@ public class DessertController {
 
     @PostMapping
     public DessertGetDto saveNew(@RequestBody DessertPostDto newDessert) {
-        Dessert dessert = dessertService.saveNew(newDessert);
+        Dessert dessert = dessertService.save(newDessert);
         return dessertMapper.toGetDto(dessert);
     }
 

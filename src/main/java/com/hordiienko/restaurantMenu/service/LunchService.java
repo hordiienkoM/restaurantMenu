@@ -21,7 +21,7 @@ public class LunchService {
     @Autowired
     private MainCourseService mainCourseService;
 
-    public Lunch saveNew(LunchPostDto lunchInfo) {
+    public Lunch save(LunchPostDto lunchInfo) {
         Lunch lunch = new Lunch();
         setInfo(lunch, lunchInfo);
         return lunchRepository.save(lunch);

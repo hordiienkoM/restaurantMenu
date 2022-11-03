@@ -18,7 +18,7 @@ public class CuisineController {
 
     @PostMapping
     public CuisineGetDto saveNew(@RequestParam String cuisineName) {
-        Cuisine cuisine = cuisineService.saveNew(cuisineName);
+        Cuisine cuisine = cuisineService.save(cuisineName);
         return cuisineMapper.toGetDto(cuisine);
     }
 
