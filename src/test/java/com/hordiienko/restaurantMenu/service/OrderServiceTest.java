@@ -154,33 +154,14 @@ public class OrderServiceTest {
         OrderPostDto orderInfo = new OrderPostDto();
         orderInfo.setDrinkAdditiveOrders(
                 new HashSet<>(List.of(
-            new DrinkAdditiveOrderPostDto(1L, 5),
-            new DrinkAdditiveOrderPostDto(1L, 3),
-            new DrinkAdditiveOrderPostDto(1L, 1)
-        )));
+                        new DrinkAdditiveOrderPostDto(1L, 5),
+                        new DrinkAdditiveOrderPostDto(1L, 3),
+                        new DrinkAdditiveOrderPostDto(1L, 1)
+                )));
 
         mockOrderService.saveDrinkAdditives(order, orderInfo);
         Set<DrinkAdditiveOrder> drinkAdditiveOrders = order.getDrinkAdditiveOrders();
-        List<DrinkAdditiveOrder> generated = drinkAdditiveOrders.stream()
-                .sorted((e1, e2) -> e1.getAmount() - e2.getAmount()).toList();
-        List<DrinkAdditiveOrder> trueTemplate = trueDrinkAdditiveOrders.stream()
-                .sorted((e1,e2) -> e1.getAmount() - e2.getAmount()).toList();
-        assertEquals(generated, trueTemplate);
+        assertEquals(drinkAdditiveOrders, trueDrinkAdditiveOrders);
     }
-
-//    private void saveDrinkAdditives(Order order, OrderInfo orderInfo) {
-//        Set<DrinkAdditiveOrderPostDto> additivesInfo = orderInfo.getDrinkAdditiveOrders();
-//        Set<DrinkAdditiveOrder> additives = additivesInfo.stream()
-//                .map(e -> {
-//                    DrinkAdditiveOrder additiveOrder = new DrinkAdditiveOrder();
-//                    additiveOrder.setDrinkAdditive(
-//                            additiveRepository.findById(e.getDrinkAdditiveId()).orElseThrow()
-//                    );
-//                    additiveOrder.setAmount(e.getAmount());
-//                    additiveOrder.setOrder(order);
-//                    return additiveOrder;
-//                }).collect(Collectors.toSet());
-//        order.setDrinkAdditiveOrders(additives);
-//    }
 
 }

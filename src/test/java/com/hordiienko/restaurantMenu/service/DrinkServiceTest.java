@@ -1,7 +1,8 @@
 package com.hordiienko.restaurantMenu.service;
 
-import com.hordiienko.restaurantMenu.dto.DessertPostDto;
-import com.hordiienko.restaurantMenu.entity.*;
+import com.hordiienko.restaurantMenu.dto.DrinkPostDto;
+import com.hordiienko.restaurantMenu.entity.Cuisine;
+import com.hordiienko.restaurantMenu.entity.Drink;
 import com.hordiienko.restaurantMenu.repository.CuisineRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,42 +17,40 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DessertServiceTest {
+public class DrinkServiceTest {
     @InjectMocks
-    private DessertService mockDessertService;
+    private DrinkService mockDrinkService;
     @Mock
     private CuisineRepository mockCuisineRepository;
-    private DessertPostDto dessertInfo;
-
     private Cuisine trueCuisine;
+    private DrinkPostDto drinkInfo;
 
-    private Dessert trueDesert;
-
+    private Drink trueDrink;
 
     @Before
     public void addFields() {
-        dessertInfo = new DessertPostDto();
-        dessertInfo.setName("Dessert");
-        dessertInfo.setPrice(20.8);
-        dessertInfo.setCuisineId(1L);
+        drinkInfo = new DrinkPostDto();
+        drinkInfo.setCuisineId(1L);
+        drinkInfo.setName("Tea");
+        drinkInfo.setPrice(20.0);
 
         trueCuisine = new Cuisine();
         trueCuisine.setName("Japan");
         trueCuisine.setId(1L);
 
-        trueDesert = new Dessert();
-        trueDesert.setName("Dessert");
-        trueDesert.setPrice(20.8);
-        trueDesert.setCuisine(trueCuisine);
+        trueDrink = new Drink();
+        trueDrink.setCuisine(trueCuisine);
+        trueDrink.setName("Tea");
+        trueDrink.setPrice(20.0);
     }
 
     @Test
-    public void setInfoTest() {
-        Long cuisineId = dessertInfo.getCuisineId();
+    public void saveInfoTest() {
+        Long cuisineId = trueCuisine.getId();
         when(mockCuisineRepository.findById(cuisineId)).thenReturn(Optional.of(trueCuisine));
 
-        Dessert dessert = new Dessert();
-        mockDessertService.setDessertInfo(dessert, dessertInfo);
-        assertEquals(dessert, trueDesert);
+        Drink drink = new Drink();
+        mockDrinkService.saveInfo(drink, drinkInfo);
+        assertEquals(drink, trueDrink);
     }
 }

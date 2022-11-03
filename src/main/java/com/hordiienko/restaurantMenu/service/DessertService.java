@@ -35,7 +35,7 @@ public class DessertService {
         return dessertRepository.save(dessert);
     }
 
-    protected void setDessertInfo (Dessert dessert, DessertInfo dessertInfo) {
+    protected void setDessertInfo(Dessert dessert, DessertInfo dessertInfo) {
         Cuisine cuisine = cuisineRepository.findById(
                 dessertInfo.getCuisineId()
         ).orElseThrow();
